@@ -1,0 +1,66 @@
+<br>
+<div class="" *ngIf="(suService?.selectedUser == undefined)" style="position:fixed; top:20px;">
+  <div class="alert alert-primary">
+    <img class="thumbnail float-left italic" src="assets/rfid.png" style="max-height:125px; max-width:150px;" />
+
+    <h3>Swipe your RFID tag to automatically display your profile.</h3>
+    <h6>Or click on a person in the side bar to display his/her profile.</h6>
+  </div>
+</div>
+<div class="card card-sm" *ngIf="suService?.selectedUser != undefined">
+  <div class="card-body">
+    <h5 class="card-title">{{suService?.selectedUser?.name}}
+      <button type="button" class="close" aria-label="Close" (click)="suService.selectedUser = undefined">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </h5>
+
+  </div>
+  <ul class="list-group list-group-flush">
+    <li class="list-group-item">Name: 
+      <input type="text" (input)="suService.selectedUser.name = $event.target.value" [value]="suService?.selectedUser?.name">
+    </li>
+    <hr>
+    <h5>Authentication</h5>
+    <li class="list-group-item">ID: 
+      <input type="text" (input)="suService.selectedUser.uid = $event.target.value" [value]="suService?.selectedUser?.uid">
+      <button class="btn btn-primary btn-sm" (click)="suService.setWaitingForRFID(suService.selectedUser)" [disabled]="suService.readNew">Read RFID</button>
+    </li>
+
+    <hr>
+    <h5>LDAP</h5>
+    <li class="list-group-item">SN: 
+      <input type="text" (input)="suService.selectedUser.sn = $event.target.value" [value]="suService?.selectedUser?.sn">
+    </li>
+    <li class="list-group-item">CN: 
+      <input type="text" (input)="suService.selectedUser.cn = $event.target.value" [value]="suService?.selectedUser?.cn">
+    </li>
+
+    <hr>
+    <h5>Contact</h5>
+    <li class="list-group-item">Mail: 
+      <input type="text" (input)="suService.selectedUser.mail = $event.target.value" [value]="suService?.selectedUser?.mail">
+    </li>
+    <li class="list-group-item">Phone number:
+      <input type="text" (input)="suService.selectedUser.phoneNumber = $event.target.value" [value]="suService?.selectedUser?.phoneNumber">
+    </li>
+    <li class="list-group-item">Mobile: 
+      <input type="text" (input)="suService.selectedUser.mobile = $event.target.value" [value]="suService?.selectedUser?.mobile">
+    </li>
+
+    <hr>
+    <h5>Location</h5>
+    <li class="list-group-item">ZipCode: 
+      <input type="text" (input)="suService.selectedUser.zipCode = $event.target.value" [value]="suService?.selectedUser?.zipCode">
+    </li>
+    <li class="list-group-item">City: 
+      <input type="text" (input)="suService.selectedUser.city = $event.target.value" [value]="suService?.selectedUser?.city">
+    </li>
+
+  </ul>
+  <button class="text-danger" (click)="deleteUser()" *ngIf="suService.selectedUser.fromDB" style="cursor: pointer">Delete person</button>
+
+  <button class="btn btn-primary btn-sm" (click)="suService.selectedUser.fromDB?updateUser(): createUser()">Save</button>
+</div>
+<br>
+<br>
